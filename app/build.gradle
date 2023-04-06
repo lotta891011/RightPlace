@@ -9,6 +9,10 @@ android {
     namespace 'com.example.rightplace'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "com.example.rightplace"
         minSdk 24
@@ -79,6 +83,7 @@ dependencies {
 
 
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 

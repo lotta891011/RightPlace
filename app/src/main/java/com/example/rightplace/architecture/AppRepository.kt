@@ -1,21 +1,21 @@
 package com.example.rightplace.architecture
 
 import com.example.rightplace.database.AppDatabase
-import com.example.rightplace.database.model.DocumentTypes
+import com.example.rightplace.database.model.DocumentType
 
 class AppRepository(
     private val appDatabase: AppDatabase
     ) {
 
-    fun insert(documentTypes: DocumentTypes){
-        appDatabase.documentTypeDao().insertAll(documentTypes)
+    fun insert(documentType: DocumentType){
+        appDatabase.documentTypeDao().insertAll(documentType)
 
     }
-    fun delete(documentTypes: DocumentTypes){
-        appDatabase.documentTypeDao().delete(documentTypes)
+    fun delete(documentType: DocumentType){
+        appDatabase.documentTypeDao().delete(documentType)
 
     }
-    suspend fun getAll(): List<DocumentTypes>{
+    suspend fun getAll(): List<DocumentType>{
         return appDatabase.documentTypeDao().getAll()
 
     }

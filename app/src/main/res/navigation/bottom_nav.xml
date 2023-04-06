@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/documentsFragment"
-        android:name="com.example.rightplace.DocumentsFragment"
+        android:name="com.example.rightplace.DocumentFragment"
         android:label="fragment_documents"
         tools:layout="@layout/fragment_documents" />
     <fragment
@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/roomsFragment"
-        android:name="com.example.rightplace.RoomsFragment"
+        android:name="com.example.rightplace.SpaceFragment"
         android:label="fragment_rooms"
         tools:layout="@layout/fragment_rooms" />
 </navigation>

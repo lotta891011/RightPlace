@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.rightplace.database.dao.DocumentTypesDao
-import com.example.rightplace.database.model.Documents
-import com.example.rightplace.database.model.DocumentTypes
-import com.example.rightplace.database.model.Rooms
+import com.example.rightplace.database.dao.DocumentTypeDao
+import com.example.rightplace.database.model.Document
+import com.example.rightplace.database.model.DocumentType
+import com.example.rightplace.database.model.Space
 
-@Database(entities = [DocumentTypes::class, Documents::class, Rooms::class], version = 1)
+@Database(entities = [DocumentType::class, Document::class, Space::class], version = 1)
 abstract class AppDatabase:RoomDatabase() {
     companion object{
         private var appDatabase: AppDatabase? = null
@@ -21,5 +21,5 @@ abstract class AppDatabase:RoomDatabase() {
             return  appDatabase!!
         }
     }
-    abstract fun documentTypeDao(): DocumentTypesDao
+    abstract fun documentTypeDao(): DocumentTypeDao
 }
