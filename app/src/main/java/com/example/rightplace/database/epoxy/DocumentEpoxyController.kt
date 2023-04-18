@@ -5,6 +5,7 @@ import com.example.rightplace.R
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentInterface
 import com.example.rightplace.databinding.ModelDocumentBinding
+import com.example.rightplace.databinding.ModelEmptyStateBinding
 
 class DocumentEpoxyController(
     private val documentInterface: DocumentInterface
@@ -18,6 +19,7 @@ class DocumentEpoxyController(
     override fun buildModels() {
 
         if(documentList.isEmpty()){
+            EmptyStateEpoxyModel().id("empty_sate").addTo(this)
             return
         }
         documentList.forEach { document ->
@@ -38,4 +40,10 @@ class DocumentEpoxyController(
         }
 
     }
+    class EmptyStateEpoxyModel(): ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
+        override fun ModelEmptyStateBinding.bind(){
+        //nothing at the moment
+        }
+    }
+
 }
