@@ -1,4 +1,4 @@
-package com.example.rightplace.database.model
+package com.example.rightplace.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

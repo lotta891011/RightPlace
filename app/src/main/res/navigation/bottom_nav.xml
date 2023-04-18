@@ -9,7 +9,16 @@
         android:id="@+id/documentsFragment"
         android:name="com.example.rightplace.DocumentFragment"
         android:label="fragment_documents"
-        tools:layout="@layout/fragment_documents" />
+        tools:layout="@layout/fragment_document" >
+        <action
+        android:id="@+id/action_documentFragment_to_addDocumentFragment"
+        app:destination="@id/addDocumentFragment" />
+    </fragment>
+    <fragment
+    android:id="@+id/addDocumentFragment"
+    android:name="com.example.rightplace.AddDocumentFragment"
+    android:label="AddDoc"
+    tools:layout="@layout/fragment_add_document"/>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.rightplace.CameraFragment"

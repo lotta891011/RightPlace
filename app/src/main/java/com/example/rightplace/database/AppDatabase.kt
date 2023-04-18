@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.rightplace.database.dao.DocumentDao
 import com.example.rightplace.database.dao.DocumentTypeDao
-import com.example.rightplace.database.model.Document
-import com.example.rightplace.database.model.DocumentType
-import com.example.rightplace.database.model.Space
+import com.example.rightplace.model.Document
+import com.example.rightplace.model.DocumentType
+import com.example.rightplace.model.Space
 
 @Database(entities = [DocumentType::class, Document::class, Space::class], version = 1)
 abstract class AppDatabase:RoomDatabase() {
@@ -22,4 +23,5 @@ abstract class AppDatabase:RoomDatabase() {
         }
     }
     abstract fun documentTypeDao(): DocumentTypeDao
+    abstract fun documentDao(): DocumentDao
 }

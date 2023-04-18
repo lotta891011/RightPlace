@@ -1,22 +1,24 @@
 package com.example.rightplace.architecture
 
 import com.example.rightplace.database.AppDatabase
-import com.example.rightplace.database.model.DocumentType
+import com.example.rightplace.model.Document
+import com.example.rightplace.model.DocumentType
+import kotlinx.coroutines.flow.Flow
 
 class AppRepository(
     private val appDatabase: AppDatabase
     ) {
 
-    fun insert(documentType: DocumentType){
-        appDatabase.documentTypeDao().insertAll(documentType)
+    suspend fun insertDocument(document: Document){
+        appDatabase.documentDao().insertAll(document)
 
     }
-    fun delete(documentType: DocumentType){
-        appDatabase.documentTypeDao().delete(documentType)
+    suspend fun deleteDocument(document: Document){
+        appDatabase.documentDao().delete(document)
 
     }
-    suspend fun getAll(): List<DocumentType>{
-        return appDatabase.documentTypeDao().getAll()
+    fun getAllDocuments(): Flow<List<Document>>{
+        return appDatabase.documentDao().getAll()
 
     }
 }

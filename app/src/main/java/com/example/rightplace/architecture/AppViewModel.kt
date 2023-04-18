@@ -4,28 +4,40 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rightplace.database.AppDatabase
-import com.example.rightplace.database.model.DocumentType
+import com.example.rightplace.model.Document
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class AppViewModel : ViewModel(){
     private lateinit var repository : AppRepository
-    val documentTypeLiveData = MutableLiveData<List<DocumentType>>()
+    val documentLiveData = MutableLiveData<List<Document>>()
 
+    val transactionCompleteLiveData = MutableLiveData<Boolean>()
     fun init(appDatabase: AppDatabase){
         repository = AppRepository(appDatabase)
 
         viewModelScope.launch {
-            val items = repository.getAll()
-            documentTypeLiveData.postValue(items)
+            val items = repository.getAllDocuments().collect{ items ->
+                documentLiveData.postValue(items)
+            }
+
         }
 
     }
-    fun insert(documentType: DocumentType){
-        repository.insert(documentType)
+    fun insertDocument(document: Document){
+        viewModelScope.launch {
+            repository.insertDocument(document)
+
+            transactionCompleteLiveData.postValue(true)
+        }
+
 
     }
-    fun delete(documentType: DocumentType){
-        repository.delete(documentType)
+    fun deleteDocument(document: Document){
+        viewModelScope.launch {
+            repository.deleteDocument(document)
+        }
+
 
     }
 }
