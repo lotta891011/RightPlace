@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav"
-    app:startDestination="@id/documentsFragment">
+    app:startDestination="@id/documentFragment">
 
     <fragment
-        android:id="@+id/documentsFragment"
+        android:id="@+id/documentFragment"
         android:name="com.example.rightplace.DocumentFragment"
         android:label="fragment_documents"
         tools:layout="@layout/fragment_document" >
@@ -18,14 +18,20 @@
     android:id="@+id/addDocumentFragment"
     android:name="com.example.rightplace.AddDocumentFragment"
     android:label="AddDoc"
-    tools:layout="@layout/fragment_add_document"/>
+    tools:layout="@layout/fragment_add_document">
+
+
+
+    </fragment>
+
+
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.rightplace.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
     <fragment
-        android:id="@+id/roomsFragment"
+        android:id="@+id/spaceFragment"
         android:name="com.example.rightplace.SpaceFragment"
         android:label="fragment_rooms"
         tools:layout="@layout/fragment_rooms" />

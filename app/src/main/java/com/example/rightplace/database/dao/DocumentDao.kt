@@ -12,6 +12,9 @@ interface DocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(document: Document)
 
+    @Update
+    suspend fun update(document: Document)
+
     @Delete
     suspend fun delete(document: Document)
 }

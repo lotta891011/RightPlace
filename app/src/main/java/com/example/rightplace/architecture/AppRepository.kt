@@ -17,6 +17,11 @@ class AppRepository(
         appDatabase.documentDao().delete(document)
 
     }
+
+    suspend fun updateDocument(document: Document){
+        appDatabase.documentDao().update(document)
+
+    }
     fun getAllDocuments(): Flow<List<Document>>{
         return appDatabase.documentDao().getAll()
 

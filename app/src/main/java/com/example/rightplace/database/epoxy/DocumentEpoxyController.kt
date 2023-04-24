@@ -22,9 +22,11 @@ class DocumentEpoxyController(
             EmptyStateEpoxyModel().id("empty_sate").addTo(this)
             return
         }
-        documentList.forEach { document ->
+        // dodawanie posoriwanych obiektów do widoku iterując
+        documentList.sortedByDescending { it.id } .forEach { document ->
             DocumentEpoxyModel(document, documentInterface).id(document.id).addTo(this)
         }
+
     }
     data class DocumentEpoxyModel(
         val document: Document,
@@ -36,6 +38,10 @@ class DocumentEpoxyController(
             descriptionTextView.text = document.Description
             deleteButton.setOnClickListener {
                 documentInterface.onDelete(document)
+            }
+
+            root.setOnClickListener {
+                documentInterface.onItemSelected(document)
             }
         }
 

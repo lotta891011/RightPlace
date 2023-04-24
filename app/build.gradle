@@ -1,10 +1,22 @@
+buildscript {
+    dependencies {
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
+    }
+}
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 //    id 'com.google.devtools.ksp' version '1.8.0-1.0.8'
 }
-
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated/source/navigation-args'
+        }
+    }
+}
 android {
     namespace 'com.example.rightplace'
     compileSdk 33
@@ -38,8 +50,13 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
+    def nav_version = "2.3.2"
+
+    implementation "androidx.fragment:fragment:1.2.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

@@ -1,11 +1,13 @@
 package com.example.rightplace
 
 import android.os.Bundle
+import android.text.Layout.Directions
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavDirections
 import com.example.rightplace.architecture.AppViewModel
 import com.example.rightplace.database.epoxy.DocumentEpoxyController
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
@@ -46,6 +48,8 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
         sharedViewModel.deleteDocument(document)
     }
 
+    override fun onItemSelected(document: Document) {
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
