@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.init(AppDatabase.getDatabase(this))
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(setOf(R.id.documentFragment, R.id.cameraFragment, R.id.spaceFragment))

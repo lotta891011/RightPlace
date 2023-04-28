@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavArgs
+import androidx.navigation.NavGraph
+import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
 import java.util.UUID
@@ -12,6 +15,16 @@ import java.util.UUID
 class AddDocumentFragment: BaseFragment() {
     private var _binding: FragmentAddDocumentBinding? = null
     private val binding get() = _binding!!
+
+    private val safeArgs : AddDocumentFragmentArgs by navArgs()
+    private val selectedDocument : Document? by lazy{
+        sharedViewModel.documentLiveData.value?.find {
+            it.id == safeArgs.documentId
+
+        }
+
+    }
+    private var isInEditMode : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +43,10 @@ class AddDocumentFragment: BaseFragment() {
         }
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
+                if(isInEditMode){
+                    navigateUp()
+                    return@observe
+                }
                 Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
                 binding.nameEditText.text=null
                 binding.nameEditText.requestFocus()
@@ -38,7 +55,19 @@ class AddDocumentFragment: BaseFragment() {
             }
         }
         binding.nameEditText.requestFocus()
+
+        // setup when in edit mode
+        selectedDocument?.let {document ->  
+            isInEditMode = true
+            binding.nameEditText.setText(document.Name)
+            binding.descriptionEditText.setText(document.Description)
+            binding.saveButton.text= "Zaktualizuj"
+            mainActivity.supportActionBar?.title="Zaktualizuj informacje"
+
+
+        }
     }
+
 
     private fun saveDocumentToDatabase(){
         val documentName = binding.nameEditText.text.toString().trim()
@@ -49,16 +78,26 @@ class AddDocumentFragment: BaseFragment() {
         binding.nameTextField.error = null
         val documentDescription = binding.descriptionEditText.text.toString().trim()
 
+        if(isInEditMode){
+            val document = selectedDocument!!.copy(
+                Name = documentName,
+                Description = documentDescription,
+            )
+            sharedViewModel.updateDocument(document)
 
-        val document = Document(
-            id = UUID.randomUUID().hashCode(),
-            Name = documentName,
-            Description = documentDescription,
-            TypeId = 1, //todo
-            RoomId = 1, //todo
-            Code = documentName.hashCode()
-        )
-        sharedViewModel.insertDocument(document)
+
+        }
+        else{
+            val document = Document(
+                id = UUID.randomUUID().hashCode(),
+                Name = documentName,
+                Description = documentDescription,
+                TypeId = 1, //todo
+                RoomId = 1, //todo
+                Code = documentName.hashCode()
+            )
+            sharedViewModel.insertDocument(document)
+        }
 
     }
     override fun onDestroyView() {

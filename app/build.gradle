@@ -1,4 +1,11 @@
 buildscript {
+    repositories {
+        maven {
+            url "https://maven.google.com"
+        }
+
+        jcenter()
+    }
     dependencies {
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
     }
@@ -8,16 +15,19 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 //    id 'com.google.devtools.ksp' version '1.8.0-1.0.8'
 }
-sourceSets {
-    main {
-        java {
-            srcDirs += 'build/generated/source/navigation-args'
-        }
-    }
-}
+
 android {
+    sourceSets {
+//        main {
+//            java {
+//                srcDirs += 'build/generated/source/navigation-args/'
+//            }
+//        }
+        main.kotlin.srcDirs += 'build/generated/source/navigation-args/'
+    }
     namespace 'com.example.rightplace'
     compileSdk 33
 
@@ -52,11 +62,25 @@ android {
 
 
 dependencies {
-    def nav_version = "2.3.2"
+    def nav_version = "2.5.3"
 
-    implementation "androidx.fragment:fragment:1.2.5"
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // Jetpack Compose Integration
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    implementation "androidx.fragment:fragment:1.2.5"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

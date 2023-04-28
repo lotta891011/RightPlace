@@ -2,6 +2,7 @@ package com.example.rightplace
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavDirections
 import com.example.rightplace.architecture.AppViewModel
 import com.example.rightplace.database.AppDatabase
 
@@ -20,5 +21,9 @@ abstract class BaseFragment : Fragment(){
 
     protected fun navigateViaGraph(actionId: Int){
         mainActivity.navController.navigate(actionId)
+    }
+
+    protected fun navigateViaGraph(navDirections: NavDirections){
+        mainActivity.navController.navigate(navDirections)
     }
 }

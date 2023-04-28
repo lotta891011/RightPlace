@@ -21,7 +21,10 @@
     tools:layout="@layout/fragment_add_document">
 
 
-
+        <argument
+            android:name="document_id"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 

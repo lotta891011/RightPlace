@@ -43,6 +43,8 @@ class AppViewModel : ViewModel(){
     fun updateDocument(document: Document){
         viewModelScope.launch {
             repository.updateDocument(document)
+
+            transactionCompleteLiveData.postValue(true)
         }
 
 
