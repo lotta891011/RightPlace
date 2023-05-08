@@ -89,7 +89,7 @@ class AddDocumentFragment: BaseFragment() {
         }
         else{
             val document = Document(
-                id = UUID.randomUUID().hashCode(),
+                id = UUID.randomUUID().toString(),
                 Name = documentName,
                 Description = documentDescription,
                 TypeId = 1, //todo

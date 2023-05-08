@@ -8,16 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.navArgs
 import com.example.rightplace.architecture.AppViewModel
-import com.example.rightplace.database.epoxy.DocumentEpoxyController
+import com.example.rightplace.view.epoxy.DocumentEpoxyController
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.databinding.FragmentDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentInterface
+import kotlin.reflect.KProperty
+
 
 class DocumentFragment : BaseFragment(), DocumentInterface {
     private var _binding: FragmentDocumentBinding? = null
     private val binding get() = _binding!!
+
 
 
     override fun onCreateView(

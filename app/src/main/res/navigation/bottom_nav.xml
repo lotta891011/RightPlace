@@ -13,6 +13,10 @@
         <action
         android:id="@+id/action_documentFragment_to_addDocumentFragment"
         app:destination="@id/addDocumentFragment" />
+        <argument
+            android:name="space_id"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
     <fragment
     android:id="@+id/addDocumentFragment"
@@ -23,7 +27,7 @@
 
         <argument
             android:name="document_id"
-            app:argType="integer"
+            app:argType="string"
             android:defaultValue="0" />
     </fragment>
 
@@ -37,5 +41,18 @@
         android:id="@+id/spaceFragment"
         android:name="com.example.rightplace.SpaceFragment"
         android:label="fragment_rooms"
-        tools:layout="@layout/fragment_rooms" />
+        tools:layout="@layout/fragment_space" >
+        <action
+            android:id="@+id/action_spaceFragment_to_documentFragment"
+            app:destination="@id/documentFragment" />
+        <action
+            android:id="@+id/action_spaceFragment_to_addSpaceFragment"
+            app:destination="@id/addSpaceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addSpaceFragment"
+        android:name="com.example.rightplace.AddSpaceFragment"
+        android:label="fragment_space"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

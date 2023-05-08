@@ -1,4 +1,4 @@
-package com.example.rightplace.database.epoxy
+package com.example.rightplace.view.epoxy
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.rightplace.R

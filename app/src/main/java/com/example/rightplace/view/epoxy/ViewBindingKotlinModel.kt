@@ -1,4 +1,4 @@
-package com.example.rightplace.database.epoxy
+package com.example.rightplace.view.epoxy
 
 import android.view.View
 import androidx.annotation.LayoutRes

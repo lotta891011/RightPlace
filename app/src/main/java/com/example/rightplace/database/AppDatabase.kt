@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.rightplace.database.dao.DocumentDao
 import com.example.rightplace.database.dao.DocumentTypeDao
+import com.example.rightplace.database.dao.SpaceDao
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentType
 import com.example.rightplace.model.Space
@@ -24,4 +25,5 @@ abstract class AppDatabase:RoomDatabase() {
     }
     abstract fun documentTypeDao(): DocumentTypeDao
     abstract fun documentDao(): DocumentDao
+    abstract fun spaceDao(): SpaceDao
 }

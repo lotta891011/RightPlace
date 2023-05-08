@@ -3,6 +3,7 @@ package com.example.rightplace.architecture
 import com.example.rightplace.database.AppDatabase
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentType
+import com.example.rightplace.model.Space
 import kotlinx.coroutines.flow.Flow
 
 class AppRepository(
@@ -26,4 +27,24 @@ class AppRepository(
         return appDatabase.documentDao().getAll()
 
     }
+
+    fun getAllSpaces(): Flow<List<Space>>{
+        return appDatabase.spaceDao().getAll()
+
+    }
+
+    suspend fun insertSpace(space: Space){
+        appDatabase.spaceDao().insertAll(space)
+
+    }
+    suspend fun deleteSpace(space: Space){
+        appDatabase.spaceDao().delete(space)
+
+    }
+
+    fun getFiltered(filter : String): Flow<List<Document>>{
+        return appDatabase.documentDao().getFiltered(filter)
+    }
+
+
 }

@@ -1,19 +1,18 @@
 package com.example.rightplace.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.rightplace.model.Space
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SpaceDao {
     @Query("SELECT * FROM space")
-    suspend fun getAll(): List<Space>
+    fun getAll(): Flow<List<Space>>
 
-    @Insert
-    fun insertAll(space: Space)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(space: Space)
 
     @Delete
-    fun delete(space: Space)
+    suspend fun delete(space: Space)
 }

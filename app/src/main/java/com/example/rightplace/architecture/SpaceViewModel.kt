@@ -9,42 +9,35 @@ import com.example.rightplace.model.Space
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class AppViewModel : ViewModel(){
+class SpaceViewModel : ViewModel(){
     private lateinit var repository : AppRepository
-    val documentLiveData = MutableLiveData<List<Document>>()
+    val spaceLiveData = MutableLiveData<List<Space>>()
 
     val transactionCompleteLiveData = MutableLiveData<Boolean>()
     fun init(appDatabase: AppDatabase){
         repository = AppRepository(appDatabase)
 
         viewModelScope.launch {
-            val documents = repository.getAllDocuments().collect{ items ->
-                documentLiveData.postValue(items)
+
+            val spaces = repository.getAllSpaces().collect{ items ->
+                spaceLiveData.postValue(items)
             }
+
         }
 
     }
-    fun insertDocument(document: Document){
+    fun insertSpace(space: Space){
         viewModelScope.launch {
-            repository.insertDocument(document)
+            repository.insertSpace(space)
 
             transactionCompleteLiveData.postValue(true)
         }
 
 
     }
-    fun deleteDocument(document: Document){
+    fun deleteSpace(space: Space){
         viewModelScope.launch {
-            repository.deleteDocument(document)
-        }
-
-
-    }
-    fun updateDocument(document: Document){
-        viewModelScope.launch {
-            repository.updateDocument(document)
-
-            transactionCompleteLiveData.postValue(true)
+            repository.deleteSpace(space)
         }
 
 

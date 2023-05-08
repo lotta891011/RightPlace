@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import com.example.rightplace.architecture.AppViewModel
+import com.example.rightplace.architecture.SpaceViewModel
 import com.example.rightplace.database.AppDatabase
 
 abstract class BaseFragment : Fragment(){
@@ -14,6 +15,8 @@ abstract class BaseFragment : Fragment(){
         get() = AppDatabase.getDatabase(requireActivity())
 
     protected val sharedViewModel: AppViewModel by activityViewModels()
+
+    protected val spaceViewModel: SpaceViewModel by activityViewModels()
 
     protected fun navigateUp(){
         mainActivity.navController.navigateUp()
