@@ -1,28 +1,27 @@
 package com.example.rightplace
 
 import android.os.Bundle
-import android.text.Layout.Directions
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.navArgs
-import com.example.rightplace.architecture.AppViewModel
 import com.example.rightplace.view.epoxy.DocumentEpoxyController
-import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.databinding.FragmentDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentInterface
-import kotlin.reflect.KProperty
+import com.example.rightplace.model.Space
 
 
 class DocumentFragment : BaseFragment(), DocumentInterface {
     private var _binding: FragmentDocumentBinding? = null
     private val binding get() = _binding!!
 
-
+    private val safeArgs : DocumentFragmentArgs by navArgs()
+    private val selectedSpace : Space? by lazy{
+        spaceViewModel.spaceLiveData.value?.find {
+            it.id == safeArgs.spaceId
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,9 +34,16 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title="Dokumenty w: "+selectedSpace?.Name
 
+        selectedSpace?.id?.let { sharedViewModel.setFilterQuery(it) }
         binding.addButton.setOnClickListener {
-            navigateViaGraph(R.id.action_documentFragment_to_addDocumentFragment)
+            val navDirections = selectedSpace?.id?.let { it1 ->
+                DocumentFragmentDirections.actionDocumentFragmentToAddDocumentFragment(
+                    it1
+                )
+            }
+            navDirections?.let { it1 -> navigateViaGraph(it1) }
         }
 
         val controller = DocumentEpoxyController(this)

@@ -4,7 +4,9 @@ import com.example.rightplace.database.AppDatabase
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentType
 import com.example.rightplace.model.Space
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 class AppRepository(
     private val appDatabase: AppDatabase
@@ -42,8 +44,10 @@ class AppRepository(
 
     }
 
-    fun getFiltered(filter : String): Flow<List<Document>>{
-        return appDatabase.documentDao().getFiltered(filter)
+    suspend fun getFiltered(filter : String): List<Document>{
+        return withContext(Dispatchers.IO) {
+            appDatabase.documentDao().getFiltered(filter)
+        }
     }
 
 

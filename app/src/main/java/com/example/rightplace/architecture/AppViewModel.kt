@@ -5,25 +5,42 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rightplace.database.AppDatabase
 import com.example.rightplace.model.Document
-import com.example.rightplace.model.Space
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AppViewModel : ViewModel(){
     private lateinit var repository : AppRepository
-    val documentLiveData = MutableLiveData<List<Document>>()
+    val documentLiveData = MutableLiveData<List<Document>?>()
 
     val transactionCompleteLiveData = MutableLiveData<Boolean>()
     fun init(appDatabase: AppDatabase){
         repository = AppRepository(appDatabase)
 
-        viewModelScope.launch {
-            val documents = repository.getAllDocuments().collect{ items ->
-                documentLiveData.postValue(items)
-            }
-        }
+//        viewModelScope.launch {
+//            val documents = repository.getAllDocuments().collect{ items ->
+//                documentLiveData.postValue(items)
+//            }
+//        }
 
     }
+
+    val liveData : MutableLiveData<List<Document>?>
+        get() = documentLiveData
+
+    suspend fun getFilteredUser(filter: String): List<Document> {
+        return withContext(Dispatchers.IO) {
+            repository.getFiltered(filter)
+        }
+    }
+
+    // to set the filterquery from the fragment/activity
+    fun setFilterQuery(query: String) {
+        viewModelScope.launch {
+            documentLiveData.postValue(getFilteredUser(query))
+        }
+    }
+
     fun insertDocument(document: Document){
         viewModelScope.launch {
             repository.insertDocument(document)

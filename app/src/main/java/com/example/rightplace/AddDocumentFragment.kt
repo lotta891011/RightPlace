@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.NavArgs
-import androidx.navigation.NavGraph
 import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
+import com.example.rightplace.model.Space
 import java.util.UUID
 
 class AddDocumentFragment: BaseFragment() {
@@ -17,12 +16,17 @@ class AddDocumentFragment: BaseFragment() {
     private val binding get() = _binding!!
 
     private val safeArgs : AddDocumentFragmentArgs by navArgs()
-    private val selectedDocument : Document? by lazy{
-        sharedViewModel.documentLiveData.value?.find {
-            it.id == safeArgs.documentId
-
+//    private val selectedDocument : Document? by lazy{
+//        sharedViewModel.documentLiveData.value?.find {
+//            it.id == safeArgs.documentId
+//
+//        }
+//
+//    }
+    private val selectedSpace : Space? by lazy{
+        spaceViewModel.spaceLiveData.value?.find {
+            it.id == safeArgs.spaceId
         }
-
     }
     private var isInEditMode : Boolean = false
 
@@ -37,6 +41,7 @@ class AddDocumentFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title="Dodaj dokument do: "+selectedSpace?.Name
 
         binding.saveButton.setOnClickListener {
             saveDocumentToDatabase()
@@ -57,15 +62,15 @@ class AddDocumentFragment: BaseFragment() {
         binding.nameEditText.requestFocus()
 
         // setup when in edit mode
-        selectedDocument?.let {document ->  
-            isInEditMode = true
-            binding.nameEditText.setText(document.Name)
-            binding.descriptionEditText.setText(document.Description)
-            binding.saveButton.text= "Zaktualizuj"
-            mainActivity.supportActionBar?.title="Zaktualizuj informacje"
-
-
-        }
+//        selectedDocument?.let {document ->
+//            isInEditMode = true
+//            binding.nameEditText.setText(document.Name)
+//            binding.descriptionEditText.setText(document.Description)
+//            binding.saveButton.text= "Zaktualizuj"
+//            mainActivity.supportActionBar?.title="Zaktualizuj informacje"
+//
+//
+//        }
     }
 
 
@@ -79,11 +84,11 @@ class AddDocumentFragment: BaseFragment() {
         val documentDescription = binding.descriptionEditText.text.toString().trim()
 
         if(isInEditMode){
-            val document = selectedDocument!!.copy(
-                Name = documentName,
-                Description = documentDescription,
-            )
-            sharedViewModel.updateDocument(document)
+//            val document = selectedDocument!!.copy(
+//                Name = documentName,
+//                Description = documentDescription,
+//            )
+//            sharedViewModel.updateDocument(document)
 
 
         }
@@ -92,8 +97,8 @@ class AddDocumentFragment: BaseFragment() {
                 id = UUID.randomUUID().toString(),
                 Name = documentName,
                 Description = documentDescription,
-                TypeId = 1, //todo
-                RoomId = 1, //todo
+                TypeId = "1",
+                RoomId = selectedSpace!!.id,
                 Code = documentName.hashCode()
             )
             sharedViewModel.insertDocument(document)

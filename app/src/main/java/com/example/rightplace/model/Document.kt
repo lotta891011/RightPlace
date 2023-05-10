@@ -21,11 +21,11 @@ import androidx.room.PrimaryKey
 
         CASCADE)]
 )
-data class Document (
-        @PrimaryKey val id:String,
-        @ColumnInfo(name = "name") val Name:String?,
-        @ColumnInfo(name = "description") val Description:String?,
-        @ColumnInfo(name = "type_id") val TypeId:Int,
-        @ColumnInfo(name = "space_id") val RoomId:Int,
-        @ColumnInfo(name = "code") val Code:Int
+data class Document(
+    @PrimaryKey val id:String,
+    @ColumnInfo(name = "name") val Name:String?,
+    @ColumnInfo(name = "description") val Description:String?,
+    @ColumnInfo(name = "type_id") val TypeId: String,
+    @ColumnInfo(name = "space_id") val RoomId: String,
+    @ColumnInfo(name = "code") val Code:Int
 )

@@ -10,8 +10,8 @@ interface DocumentDao {
     @Query("SELECT * FROM document")
     fun getAll(): Flow<List<Document>>
 
-    @Query("SELECT * FROM document WHERE space_id = '%' || :filter || '%' ")
-    fun getFiltered(filter: String): Flow<List<Document>>
+    @Query("SELECT * FROM document WHERE space_id =  :filter")
+    fun getFiltered(filter: String): List<Document>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(document: Document)

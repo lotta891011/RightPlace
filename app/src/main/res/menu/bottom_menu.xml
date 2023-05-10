@@ -2,15 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/documentFragment"
-        android:title="Documents"
-        android:icon="@drawable/file_drawable"/>
+        android:id="@+id/spaceFragment"
+        android:title="Spaces"
+        android:icon="@drawable/room_drawable"/>
+<!--    <item-->
+<!--        android:id="@+id/documentFragment"-->
+<!--        android:title="Documents"-->
+<!--        android:icon="@drawable/file_drawable"/>-->
     <item
         android:id="@+id/cameraFragment"
         android:title="Camera"
         android:icon="@drawable/camera_drawable"/>
-    <item
-        android:id="@+id/spaceFragment"
-        android:title="Spaces"
-        android:icon="@drawable/room_drawable"/>
+
 </menu>
