@@ -14,8 +14,6 @@ class AddSpaceFragment: BaseFragment() {
     private var _binding: FragmentAddSpaceBinding? = null
     private val binding get() = _binding!!
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
