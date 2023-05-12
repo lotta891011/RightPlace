@@ -59,7 +59,7 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
     }
 
     override fun onItemSelected(document: Document) {
-        val navDirections = DocumentFragmentDirections.actionDocumentFragmentToAddDocumentFragment(document.id)
+        val navDirections = DocumentFragmentDirections.actionDocumentFragmentToShowDocumentFragment(document.id)
         navigateViaGraph(navDirections)
     }
     override fun onDestroyView() {

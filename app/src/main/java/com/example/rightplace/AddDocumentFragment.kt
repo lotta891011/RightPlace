@@ -52,7 +52,7 @@ class AddDocumentFragment: BaseFragment() {
                     navigateUp()
                     return@observe
                 }
-                Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
+
                 binding.nameEditText.text=null
                 binding.nameEditText.requestFocus()
                 binding.descriptionEditText.text=null
@@ -102,6 +102,7 @@ class AddDocumentFragment: BaseFragment() {
                 Code = documentName.hashCode()
             )
             sharedViewModel.insertDocument(document)
+            Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
         }
 
     }

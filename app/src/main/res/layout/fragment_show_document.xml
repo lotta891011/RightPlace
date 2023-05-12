@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descriptionTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="Description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTextField">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Zaktualizuj"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextField">
+
+        </com.google.android.material.button.MaterialButton>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
