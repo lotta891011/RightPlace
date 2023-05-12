@@ -15,7 +15,6 @@ class AddSpaceFragment: BaseFragment() {
     private val binding get() = _binding!!
 
 
-    private var isInEditMode : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +27,14 @@ class AddSpaceFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title="Dodaj pokój"
+
 
         binding.saveButton.setOnClickListener {
             saveSpaceToDatabase()
         }
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
-                Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
                 binding.nameEditText.text=null
                 binding.nameEditText.requestFocus()
                 binding.descriptionEditText.text=null
@@ -62,6 +62,7 @@ class AddSpaceFragment: BaseFragment() {
             Description = spaceDescription
         )
         spaceViewModel.insertSpace(space)
+        Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
 
 
     }

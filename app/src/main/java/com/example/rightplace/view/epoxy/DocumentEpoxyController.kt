@@ -38,6 +38,7 @@ class DocumentEpoxyController(
             descriptionTextView.text = document.Description
             deleteButton.setOnClickListener {
                 documentInterface.onDelete(document)
+
             }
 
             root.setOnClickListener {

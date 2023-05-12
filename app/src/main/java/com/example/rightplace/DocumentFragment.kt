@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.example.rightplace.view.epoxy.DocumentEpoxyController
 import com.example.rightplace.databinding.FragmentDocumentBinding
@@ -56,6 +57,8 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
     }
     override fun onDelete(document: Document) {
         sharedViewModel.deleteDocument(document)
+        Toast.makeText(requireActivity(), "Pozycja usunięta pomyślnie", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onItemSelected(document: Document) {

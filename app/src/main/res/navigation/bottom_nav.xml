@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/documentFragment"
         android:name="com.example.rightplace.DocumentFragment"
-        android:label="fragment_documents"
+        android:label="Dokumenty"
         tools:layout="@layout/fragment_document" >
         <action
         android:id="@+id/action_documentFragment_to_addDocumentFragment"
@@ -38,12 +38,12 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.rightplace.CameraFragment"
-        android:label="fragment_camera"
+        android:label="Aparat"
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/spaceFragment"
         android:name="com.example.rightplace.SpaceFragment"
-        android:label="fragment_rooms"
+        android:label="Lista dodanych pokoi"
         tools:layout="@layout/fragment_space" >
         <action
             android:id="@+id/action_spaceFragment_to_documentFragment"

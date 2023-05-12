@@ -16,19 +16,12 @@ class AddDocumentFragment: BaseFragment() {
     private val binding get() = _binding!!
 
     private val safeArgs : AddDocumentFragmentArgs by navArgs()
-//    private val selectedDocument : Document? by lazy{
-//        sharedViewModel.documentLiveData.value?.find {
-//            it.id == safeArgs.documentId
-//
-//        }
-//
-//    }
+
     private val selectedSpace : Space? by lazy{
         spaceViewModel.spaceLiveData.value?.find {
             it.id == safeArgs.spaceId
         }
     }
-    private var isInEditMode : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,11 +41,6 @@ class AddDocumentFragment: BaseFragment() {
         }
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
-                if(isInEditMode){
-                    navigateUp()
-                    return@observe
-                }
-
                 binding.nameEditText.text=null
                 binding.nameEditText.requestFocus()
                 binding.descriptionEditText.text=null
@@ -61,16 +49,7 @@ class AddDocumentFragment: BaseFragment() {
         }
         binding.nameEditText.requestFocus()
 
-        // setup when in edit mode
-//        selectedDocument?.let {document ->
-//            isInEditMode = true
-//            binding.nameEditText.setText(document.Name)
-//            binding.descriptionEditText.setText(document.Description)
-//            binding.saveButton.text= "Zaktualizuj"
-//            mainActivity.supportActionBar?.title="Zaktualizuj informacje"
-//
-//
-//        }
+
     }
 
 
@@ -83,27 +62,17 @@ class AddDocumentFragment: BaseFragment() {
         binding.nameTextField.error = null
         val documentDescription = binding.descriptionEditText.text.toString().trim()
 
-        if(isInEditMode){
-//            val document = selectedDocument!!.copy(
-//                Name = documentName,
-//                Description = documentDescription,
-//            )
-//            sharedViewModel.updateDocument(document)
+        val document = Document(
+            id = UUID.randomUUID().toString(),
+            Name = documentName,
+            Description = documentDescription,
+            TypeId = "1",
+            RoomId = selectedSpace!!.id,
+            Code = documentName.hashCode()
+        )
+        sharedViewModel.insertDocument(document)
+        Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
 
-
-        }
-        else{
-            val document = Document(
-                id = UUID.randomUUID().toString(),
-                Name = documentName,
-                Description = documentDescription,
-                TypeId = "1",
-                RoomId = selectedSpace!!.id,
-                Code = documentName.hashCode()
-            )
-            sharedViewModel.insertDocument(document)
-            Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
-        }
 
     }
     override fun onDestroyView() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.rightplace.databinding.FragmentSpaceBinding
 import com.example.rightplace.model.Space
 import com.example.rightplace.model.SpaceInterface
@@ -22,8 +23,6 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
 
         // Inflate the layout for this fragment
         _binding = FragmentSpaceBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
@@ -50,6 +49,8 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
 
     override fun onDelete(space: Space) {
         spaceViewModel.deleteSpace(space)
+        Toast.makeText(requireActivity(), "Pozycja usunięta pomyślnie", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onItemSelected(space: Space) {
