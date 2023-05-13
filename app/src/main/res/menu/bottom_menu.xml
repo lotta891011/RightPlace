@@ -3,11 +3,15 @@
 
     <item
         android:id="@+id/spaceFragment"
-        android:title="Spaces"
+        android:title="Pokoje"
         android:icon="@drawable/room_drawable"/>
     <item
         android:id="@+id/cameraFragment"
-        android:title="Camera"
+        android:title="Aparat"
         android:icon="@drawable/camera_drawable"/>
+    <item
+        android:id="@+id/documentTypeFragment"
+        android:title="Rodzaje dokumentów"
+        android:icon="@drawable/file_drawable"/>
 
 </menu>

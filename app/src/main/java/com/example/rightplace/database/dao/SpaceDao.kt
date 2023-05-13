@@ -15,4 +15,7 @@ interface SpaceDao {
 
     @Delete
     suspend fun delete(space: Space)
+
+    @Update
+    suspend fun update(space: Space)
 }

@@ -1,15 +1,13 @@
 package com.example.rightplace.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.rightplace.model.DocumentType
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DocumentTypeDao {
     @Query("SELECT * FROM documentType")
-    suspend fun getAll(): List<DocumentType>
+    fun getAll(): Flow<List<DocumentType>>
 
 //    @Query("SELECT * FROM documentType WHERE id IN (:documentTypes)")
 //    fun loadAllByIds(documentTypes: IntArray): List<DocumentType>
@@ -18,8 +16,11 @@ interface DocumentTypeDao {
 //    fun findByName(name: String): DocumentType
 
     @Insert
-    fun insertAll(document_type: DocumentType)
+    suspend fun insertAll(document_type: DocumentType)
 
     @Delete
-    fun delete(document_type: DocumentType)
+    suspend fun delete(document_type: DocumentType)
+
+    @Update
+    suspend fun update(document_type: DocumentType)
 }

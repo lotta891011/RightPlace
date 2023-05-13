@@ -24,7 +24,7 @@ class SpaceEpoxyController(
             return
         }
         // dodawanie posoriwanych obiektów do widoku iterując
-        spaceList.sortedByDescending { it.id } .forEach { space ->
+        spaceList.sortedBy { it.Name } .forEach { space ->
             SpaceEpoxyModel(space, spaceInterface).id(space.id).addTo(this)
         }
 
@@ -37,8 +37,9 @@ class SpaceEpoxyController(
         override fun ModelSpaceBinding.bind(){
             nameTextView.text = space.Name
             descriptionTextView.text = space.Description
-            deleteButton.setOnClickListener {
-                spaceInterface.onDelete(space)
+            editButton.setOnClickListener {
+                spaceInterface.onEdit(space)
+//                spaceInterface.onDelete(space)
             }
 
             root.setOnClickListener {

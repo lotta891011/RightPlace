@@ -11,8 +11,8 @@
         android:label="Dokumenty"
         tools:layout="@layout/fragment_document" >
         <action
-        android:id="@+id/action_documentFragment_to_addDocumentFragment"
-        app:destination="@id/addDocumentFragment" />
+            android:id="@+id/action_documentFragment_to_addDocumentFragment"
+            app:destination="@id/addDocumentFragment" />
         <argument
             android:name="space_id"
             app:argType="string"
@@ -21,6 +21,7 @@
             android:id="@+id/action_documentFragment_to_showDocumentFragment"
             app:destination="@id/showDocumentFragment" />
     </fragment>
+
     <fragment
     android:id="@+id/addDocumentFragment"
     android:name="com.example.rightplace.AddDocumentFragment"
@@ -61,7 +62,12 @@
         android:id="@+id/addSpaceFragment"
         android:name="com.example.rightplace.AddSpaceFragment"
         android:label="fragment_space"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <argument
+            android:name="space_id"
+            app:argType="string"
+            android:defaultValue="null" />
+        </fragment>
 
     <fragment
         android:id="@+id/showDocumentFragment"
@@ -74,4 +80,26 @@
                 app:argType="string"
                 android:defaultValue="0" />
             </fragment>
+
+    <fragment
+        android:id="@+id/documentTypeFragment"
+        android:name="com.example.rightplace.DocumentTypeFragment"
+        android:label="Rodzaje Dokumentów"
+        tools:layout="@layout/fragment_document_type" >
+
+        <action
+            android:id="@+id/action_documentTypeFragment_to_addDocumentTypeFragment"
+            app:destination="@id/addDocumentTypeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDocumentTypeFragment"
+        android:name="com.example.rightplace.AddDocumentTypeFragment"
+        android:label="Dodaj rodzaj dokumentu"
+        tools:layout="@layout/fragment_add_document_type" >
+        <argument
+            android:name="document_type_id"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
 </navigation>

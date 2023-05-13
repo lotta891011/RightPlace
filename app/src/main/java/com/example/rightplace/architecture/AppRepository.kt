@@ -44,11 +44,33 @@ class AppRepository(
 
     }
 
+    suspend fun updateSpace(space: Space){
+        appDatabase.spaceDao().update(space)
+
+    }
+
     suspend fun getFiltered(filter : String): List<Document>{
         return withContext(Dispatchers.IO) {
             appDatabase.documentDao().getFiltered(filter)
         }
     }
 
+    suspend fun insertDocumentType(documentType: DocumentType){
+        appDatabase.documentTypeDao().insertAll(documentType)
+
+    }
+    suspend fun deleteDocumentType(documentType: DocumentType){
+        appDatabase.documentTypeDao().delete(documentType)
+
+    }
+
+    suspend fun updateDocumentType(documentType: DocumentType){
+        appDatabase.documentTypeDao().update(documentType)
+
+    }
+    fun getAllDocumentTypes(): Flow<List<DocumentType>>{
+        return appDatabase.documentTypeDao().getAll()
+
+    }
 
 }

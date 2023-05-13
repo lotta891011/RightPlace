@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import com.example.rightplace.databinding.FragmentAddSpaceBinding
-import com.example.rightplace.model.Space
+import com.example.rightplace.databinding.FragmentAddDocumentTypeBinding
+import com.example.rightplace.model.DocumentType
 import java.util.UUID
 
-class AddSpaceFragment: BaseFragment() {
-    private var _binding: FragmentAddSpaceBinding? = null
+class AddDocumentTypeFragment: BaseFragment() {
+    private var _binding: FragmentAddDocumentTypeBinding? = null
     private val binding get() = _binding!!
 
-    private val safeArgs : AddDocumentFragmentArgs by navArgs()
-    private val selectedSpace : Space? by lazy{
-        spaceViewModel.spaceLiveData.value?.find {
-            it.id == safeArgs.spaceId
-
+    private val safeArgs : AddDocumentTypeFragmentArgs by navArgs()
+    private val selectedDocumentType : DocumentType? by lazy{
+        documentTypeViewModel.documentTypeLiveData.value?.find {
+            it.id == safeArgs.documentTypeId
         }
-
     }
     private var isInEditMode : Boolean = false
     override fun onCreateView(
@@ -28,7 +26,7 @@ class AddSpaceFragment: BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddSpaceBinding.inflate(inflater, container, false)
+        _binding = FragmentAddDocumentTypeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,7 +36,7 @@ class AddSpaceFragment: BaseFragment() {
 
 
         binding.saveButton.setOnClickListener {
-            saveSpaceToDatabase()
+            saveDocumentTypeToDatabase()
         }
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
@@ -54,10 +52,10 @@ class AddSpaceFragment: BaseFragment() {
         }
         binding.nameEditText.requestFocus()
 
-        selectedSpace?.let { space ->
+        selectedDocumentType?.let { documentType ->
             isInEditMode = true
-            binding.nameEditText.setText(space.Name)
-            binding.descriptionEditText.setText(space.Description)
+            binding.nameEditText.setText(documentType.Name)
+            binding.descriptionEditText.setText(documentType.Description)
             binding.saveButton.text = "Zaktualizuj"
             mainActivity.supportActionBar?.title = "Zaktualizuj informacje"
 
@@ -65,31 +63,31 @@ class AddSpaceFragment: BaseFragment() {
     }
 
 
-    private fun saveSpaceToDatabase(){
-        val spaceName = binding.nameEditText.text.toString().trim()
-        if (spaceName.isEmpty()){
+    private fun saveDocumentTypeToDatabase(){
+        val documentTypeName = binding.nameEditText.text.toString().trim()
+        if (documentTypeName.isEmpty()){
             binding.nameTextField.error = "Pole wymagane"
             return
         }
         binding.nameTextField.error = null
-        val spaceDescription = binding.descriptionEditText.text.toString().trim()
+        val documentTypeDescription = binding.descriptionEditText.text.toString().trim()
 
         if(isInEditMode) {
-            val space = selectedSpace!!.copy(
-                Name = spaceName,
-                Description = spaceDescription,
+            val documentType = selectedDocumentType!!.copy(
+                Name = documentTypeName,
+                Description = documentTypeDescription,
             )
-            spaceViewModel.updateSpace(space)
+            documentTypeViewModel.updateDocumentType(documentType)
             Toast.makeText(requireActivity(), "Zaktualizowano pomyślnie", Toast.LENGTH_SHORT).show()
 
         }
         else{
-            val space = Space(
+            val documentType = DocumentType(
                 id = UUID.randomUUID().toString(),
-                Name = spaceName,
-                Description = spaceDescription
+                Name = documentTypeName,
+                Description = documentTypeDescription
             )
-            spaceViewModel.insertSpace(space)
+            documentTypeViewModel.insertDocumentType(documentType)
             Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
 
         }

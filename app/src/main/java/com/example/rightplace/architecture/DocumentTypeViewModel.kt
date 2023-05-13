@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rightplace.database.AppDatabase
 import com.example.rightplace.model.Document
-import com.example.rightplace.model.Space
+import com.example.rightplace.model.DocumentType
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SpaceViewModel : ViewModel(){
+class DocumentTypeViewModel : ViewModel(){
     private lateinit var repository : AppRepository
-    val spaceLiveData = MutableLiveData<List<Space>>()
+    val documentTypeLiveData = MutableLiveData<List<DocumentType>>()
 
     val transactionCompleteLiveData = MutableLiveData<Boolean>()
     fun init(appDatabase: AppDatabase){
@@ -19,32 +19,32 @@ class SpaceViewModel : ViewModel(){
 
         viewModelScope.launch {
 
-            val spaces = repository.getAllSpaces().collect{ items ->
-                spaceLiveData.postValue(items)
+            val documentTypes = repository.getAllDocumentTypes().collect{ items ->
+                documentTypeLiveData.postValue(items)
             }
 
         }
 
     }
-    fun insertSpace(space: Space){
+    fun insertDocumentType(documentType: DocumentType){
         viewModelScope.launch {
-            repository.insertSpace(space)
+            repository.insertDocumentType(documentType)
 
             transactionCompleteLiveData.postValue(true)
         }
 
 
     }
-    fun deleteSpace(space: Space){
+    fun deleteDocumentType(documentType: DocumentType){
         viewModelScope.launch {
-            repository.deleteSpace(space)
+            repository.deleteDocumentType(documentType)
         }
 
 
     }
-    fun updateSpace(space: Space){
+    fun updateDocumentType(documentType: DocumentType){
         viewModelScope.launch {
-            repository.updateSpace(space)
+            repository.updateDocumentType(documentType)
 
             transactionCompleteLiveData.postValue(true)
         }

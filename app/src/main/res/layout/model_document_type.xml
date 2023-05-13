@@ -30,17 +30,17 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/editButton"
+            app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameTextView"
             android:text="Description"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/editButton"
+            android:id="@+id/deleteButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="4dp"
-            app:srcCompat="@drawable/edit_drawble"
+            app:srcCompat="@drawable/round_delete_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

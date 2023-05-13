@@ -53,6 +53,11 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
 
     }
 
+    override fun onEdit(space: Space) {
+        val navDirections = SpaceFragmentDirections.actionSpaceFragmentToAddSpaceFragment(space.id)
+        navigateViaGraph(navDirections)
+    }
+
     override fun onItemSelected(space: Space) {
         val navDirections = SpaceFragmentDirections.actionSpaceFragmentToDocumentFragment(space.id)
         navigateViaGraph(navDirections)

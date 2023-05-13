@@ -23,7 +23,7 @@ class DocumentEpoxyController(
             return
         }
         // dodawanie posoriwanych obiektów do widoku iterując
-        documentList.sortedByDescending { it.id } .forEach { document ->
+        documentList.sortedBy { it.Name } .forEach { document ->
             DocumentEpoxyModel(document, documentInterface).id(document.id).addTo(this)
         }
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AppViewModel : ViewModel(){
+class DocumentViewModel : ViewModel(){
     private lateinit var repository : AppRepository
     val documentLiveData = MutableLiveData<List<Document>?>()
 
@@ -17,11 +17,6 @@ class AppViewModel : ViewModel(){
     fun init(appDatabase: AppDatabase){
         repository = AppRepository(appDatabase)
 
-//        viewModelScope.launch {
-//            val documents = repository.getAllDocuments().collect{ items ->
-//                documentLiveData.postValue(items)
-//            }
-//        }
 
     }
 
