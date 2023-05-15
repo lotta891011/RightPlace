@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.Space
-import java.util.UUID
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddDocumentFragment: BaseFragment() {
     private var _binding: FragmentAddDocumentBinding? = null
@@ -36,9 +40,45 @@ class AddDocumentFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainActivity.supportActionBar?.title="Dodaj dokument do: "+selectedSpace?.Name
 
-        binding.saveButton.setOnClickListener {
-            saveDocumentToDatabase()
+//
+
+        val spinner: Spinner = binding.typesSpinner
+        documentTypeViewModel.documentTypeLiveData.observe(viewLifecycleOwner){ documentTypeList ->
+            val tab: kotlin.collections.ArrayList <String> = ArrayList<String>()
+            val ids: kotlin.collections.ArrayList <String> = ArrayList<String>()
+            documentTypeList.forEach {
+                tab.add(it.Name.toString())
+                ids.add(it.id)
+            }
+            val adapter : ArrayAdapter<String> = ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_item,tab)
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+
+            binding.nameEditText.requestFocus()
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                    binding.saveButton.setOnClickListener {
+                        saveDocumentToDatabase(ids[p2])
+                    }
+
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+
+            }
         }
+
+
+
+
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
                 binding.nameEditText.text=null
@@ -47,13 +87,11 @@ class AddDocumentFragment: BaseFragment() {
                 sharedViewModel.transactionCompleteLiveData.postValue(false)
             }
         }
-        binding.nameEditText.requestFocus()
 
 
     }
 
-
-    private fun saveDocumentToDatabase(){
+    private fun saveDocumentToDatabase(id:String){
         val documentName = binding.nameEditText.text.toString().trim()
         if (documentName.isEmpty()){
             binding.nameTextField.error = "Pole wymagane"
@@ -66,7 +104,7 @@ class AddDocumentFragment: BaseFragment() {
             id = UUID.randomUUID().toString(),
             Name = documentName,
             Description = documentDescription,
-            TypeId = "1",
+            TypeId = id,
             RoomId = selectedSpace!!.id,
             Code = documentName.hashCode()
         )

@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.cameraFragment, R.id.spaceFragment, R.id.documentTypeFragment))
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.cameraFragment, R.id.spaceFragment, R.id.documentTypeFragment)
+        )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
