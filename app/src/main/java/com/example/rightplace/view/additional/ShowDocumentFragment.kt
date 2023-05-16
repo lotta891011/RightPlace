@@ -1,6 +1,7 @@
 package com.example.rightplace
 
 import android.R
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,11 @@ import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentShowDocumentBinding
 import com.example.rightplace.model.Document
+import io.github.g0dkar.qrcode.QRCode
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+
 
 class ShowDocumentFragment: BaseFragment() {
     private var _binding: FragmentShowDocumentBinding? = null
@@ -66,6 +72,18 @@ class ShowDocumentFragment: BaseFragment() {
                 binding.nameEditText.setText(document.Name)
                 binding.descriptionEditText.setText(document.Description)
 
+                val files = requireActivity().filesDir
+                val gallery = "/storage/self/primary/DCIM"
+                val dataToEncode = document.id
+                val eachQRCodeSquareSize = 15 // In Pixels!
+                val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
+
+                val qrCodeFile = File(gallery+"/"+document.id+"_qrcode.png")
+                qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
+
+                val myBitmap = BitmapFactory.decodeFile(qrCodeFile.absolutePath)
+
+                binding.imageView.setImageBitmap(myBitmap)
             }
             binding.changeButton.setOnClickListener {
                 binding.typeTextField.visibility = View.GONE

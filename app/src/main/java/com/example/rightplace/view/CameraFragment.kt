@@ -115,7 +115,6 @@ class CameraFragment : BaseFragment() {
                     .show()
 
             }
-
             override fun receiveDetections(detections: Detections<Barcode>) {
                 val barcodes = detections.detectedItems
                 if (barcodes.size() == 1) {
@@ -124,10 +123,16 @@ class CameraFragment : BaseFragment() {
 
                     //Don't forget to add this line printing value or finishing activity must run on main thread
                     requireActivity().runOnUiThread {
+
+                        val navDirections = CameraFragmentDirections.actionCameraFragmentToShowDocumentFragment(
+                            scannedValue
+                        )
+//                        navigateViaGraph(navDirections)
+                        safeNavigate(navDirections)
+
+
+                        Toast.makeText(requireActivity(),  scannedValue, Toast.LENGTH_SHORT).show()
                         cameraSource.stop()
-                        Toast.makeText(requireActivity(), "value- $scannedValue", Toast.LENGTH_SHORT).show()
-                        val navDirections = CameraFragmentDirections.actionCameraFragmentToShowDocumentFragment()
-                        navigateViaGraph(navDirections)
                     }
                 }
             }
