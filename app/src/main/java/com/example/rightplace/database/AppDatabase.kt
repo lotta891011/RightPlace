@@ -19,7 +19,9 @@ abstract class AppDatabase:RoomDatabase() {
             if(appDatabase != null){
                 return appDatabase!!
             }
-            appDatabase = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database").build()
+            appDatabase = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database")
+                .createFromAsset("test.db")
+                .build()
             return  appDatabase!!
         }
     }
