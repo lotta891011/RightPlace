@@ -1,7 +1,12 @@
 package com.example.rightplace
 
+
 import android.R
-import android.graphics.BitmapFactory
+import android.content.Intent
+import android.graphics.*
+import android.graphics.Typeface.*
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +15,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentShowDocumentBinding
 import com.example.rightplace.model.Document
-import io.github.g0dkar.qrcode.QRCode
-import java.io.ByteArrayOutputStream
+import com.example.rightplace.model.Space
 import java.io.File
 import java.io.FileOutputStream
 
@@ -23,9 +28,17 @@ class ShowDocumentFragment: BaseFragment() {
     private var _binding: FragmentShowDocumentBinding? = null
     private val binding get() = _binding!!
 
+    var pageHeight = 600
+    var pageWidth = 500
+
+    // creating a bitmap variable
+    // for storing our images
+    lateinit var bmp: Bitmap
+    lateinit var scaledbmp: Bitmap
+
     private val safeArgs : ShowDocumentFragmentArgs by navArgs()
     private val selectedDocument : Document? by lazy{
-        sharedViewModel.documentLiveData.value?.find {
+        sharedViewModel.allDocumentsLiveData.value?.find {
             it.id == safeArgs.documentId
         }
 
@@ -50,11 +63,15 @@ class ShowDocumentFragment: BaseFragment() {
         }
         sharedViewModel.transactionCompleteLiveData.observe(viewLifecycleOwner){complete ->
             if(complete){
+                binding.pdfButton.visibility = View.GONE
+                binding.pdfShowButton.visibility = View.GONE
                     return@observe
             }
         }
         binding.nameEditText.requestFocus()
+        spaceViewModel.spaceLiveData.observe(viewLifecycleOwner){
 
+        }
 
 
         val spinner: Spinner = binding.typesSpinner
@@ -66,24 +83,43 @@ class ShowDocumentFragment: BaseFragment() {
                 ids.add(it.id)
             }
             selectedDocument?.let {document ->
+                val space : Space? by lazy{
+                    spaceViewModel.spaceLiveData.value?.find{
+                        it.id==document.RoomId
+                    }
+
+                }
+                binding.spaceField.text = space?.Name
                 binding.typeIdField.text = document.TypeId
                 binding.typesSpinner.visibility=View.GONE
                 binding.typeField.text = tab[ids.indexOf(document.TypeId)]
                 binding.nameEditText.setText(document.Name)
                 binding.descriptionEditText.setText(document.Description)
 
-                val files = requireActivity().filesDir
-                val gallery = "/storage/self/primary/DCIM"
-                val dataToEncode = document.id
-                val eachQRCodeSquareSize = 15 // In Pixels!
-                val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
 
-                val qrCodeFile = File(gallery+"/"+document.id+"_qrcode.png")
-                qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
 
+                val qrCodeFile = File("/storage/self/primary/DCIM/QR/"+document.id+"_qrcode.png")
                 val myBitmap = BitmapFactory.decodeFile(qrCodeFile.absolutePath)
 
+
                 binding.imageView.setImageBitmap(myBitmap)
+
+                myBitmap?.let{
+                    binding.pdfButton.visibility=View.VISIBLE
+
+                    binding.pdfButton.setOnClickListener {
+                        val file = generatePDF(myBitmap,document.Name.toString())
+                        binding.pdfShowButton.visibility=View.VISIBLE
+                        binding.pdfShowButton.setOnClickListener {
+                            openFile(file)
+                        }
+                    }
+
+                }
+
+
+
+
             }
             binding.changeButton.setOnClickListener {
                 binding.typeTextField.visibility = View.GONE
@@ -125,7 +161,19 @@ class ShowDocumentFragment: BaseFragment() {
         }
 
     }
+    fun openFile(file: File) {
 
+        // Get URI and MIME type of file
+        val uri: Uri = FileProvider.getUriForFile(requireActivity(),  BuildConfig.APPLICATION_ID + ".provider", file)
+        val mime: String? = requireActivity().contentResolver.getType(uri)
+
+        // Open file with user selected app
+        val intent = Intent()
+        intent.action = Intent.ACTION_VIEW
+        intent.setDataAndType(uri, mime)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivity(intent)
+    }
 
     private fun saveDocumentToDatabase(id :String = ""){
 
@@ -155,6 +203,45 @@ class ShowDocumentFragment: BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun generatePDF(bitmap: Bitmap, documentName: String ): File {
+        var pdfDocument: PdfDocument = PdfDocument()
+
+        var paint: Paint = Paint()
+        var title: Paint = Paint()
+
+        var myPageInfo: PdfDocument.PageInfo? =
+            PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
+
+        var myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
+
+        var canvas: Canvas = myPage.canvas
+
+        canvas.drawBitmap(bitmap, 32F, 40F, paint)
+
+        title.textSize = 30F
+
+        title.textAlign = Paint.Align.CENTER
+        canvas.drawText("Nazwa dokumentu:", 250F, 510F, title)
+        canvas.drawText(documentName, 250F, 560F, title)
+
+        pdfDocument.finishPage(myPage)
+
+        val file: File = File("/storage/self/primary/Documents", "$documentName.pdf")
+
+        try {
+            pdfDocument.writeTo(FileOutputStream(file))
+
+            Toast.makeText(requireActivity(), "PDF file generated..", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+            Toast.makeText(requireActivity(), "Fail to generate PDF file..", Toast.LENGTH_SHORT)
+                .show()
+        }
+        pdfDocument.close()
+        return file
     }
 
 }

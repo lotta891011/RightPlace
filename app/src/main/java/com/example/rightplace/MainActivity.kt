@@ -1,8 +1,13 @@
 package com.example.rightplace
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -12,6 +17,7 @@ import com.example.rightplace.architecture.DocumentViewModel
 import com.example.rightplace.architecture.SpaceViewModel
 import com.example.rightplace.database.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
@@ -47,6 +53,8 @@ class MainActivity : AppCompatActivity() {
             navHostFragment.navController)
 
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)||super.onSupportNavigateUp()

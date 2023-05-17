@@ -12,11 +12,18 @@ import kotlinx.coroutines.withContext
 class DocumentViewModel : ViewModel(){
     private lateinit var repository : AppRepository
     val documentLiveData = MutableLiveData<List<Document>?>()
+    val allDocumentsLiveData = MutableLiveData<List<Document>?>()
 
     val transactionCompleteLiveData = MutableLiveData<Boolean>()
     fun init(appDatabase: AppDatabase){
         repository = AppRepository(appDatabase)
+        viewModelScope.launch {
 
+            val documents = repository.getAllDocuments().collect{ items ->
+                allDocumentsLiveData.postValue(items)
+            }
+
+        }
 
     }
 

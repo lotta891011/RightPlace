@@ -65,7 +65,6 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
         val navDirections = DocumentFragmentDirections.actionDocumentFragmentToShowDocumentFragment(document.id)
 
         navigateViaGraph(navDirections)
-        Toast.makeText(requireActivity(),  document.id, Toast.LENGTH_SHORT).show()
     }
     override fun onDestroyView() {
         super.onDestroyView()

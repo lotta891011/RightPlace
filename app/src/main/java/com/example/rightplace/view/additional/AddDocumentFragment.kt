@@ -12,6 +12,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.Space
+import io.github.g0dkar.qrcode.QRCode
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -67,6 +69,9 @@ class AddDocumentFragment: BaseFragment() {
                         saveDocumentToDatabase(ids[p2])
                     }
 
+
+
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -109,6 +114,22 @@ class AddDocumentFragment: BaseFragment() {
             Code = documentName.hashCode()
         )
         sharedViewModel.insertDocument(document)
+
+        val f = File("/storage/self/primary/DCIM/QR/")
+        if(!f.exists()){
+            f.mkdir()
+        }
+        val qrCodeFile = File("/storage/self/primary/DCIM/QR/"+document.id+"_qrcode.png")
+        val dataToEncode = document.id
+        val eachQRCodeSquareSize = 15 // In Pixels!
+        val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
+        qrCodeFile.let {
+            qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
+
+        }
+
+
+
         Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
 
 
