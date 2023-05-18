@@ -36,7 +36,7 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title=getString(R.string.docs_in)+selectedSpace?.Name
+        mainActivity.supportActionBar?.title=getString(R.string.docs_in)+" "+selectedSpace?.Name
 
         selectedSpace?.id?.let { sharedViewModel.setFilterQuery(it) }
         binding.addButton.setOnClickListener {

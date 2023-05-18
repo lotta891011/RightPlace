@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import com.example.rightplace.R
 import com.example.rightplace.view.BaseFragment
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
@@ -41,7 +42,7 @@ class AddDocumentFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title="Dodaj dokument do: "+selectedSpace?.Name
+        mainActivity.supportActionBar?.title=getString(R.string.add_doc_to)+" "+selectedSpace?.Name
 
 //
 
@@ -50,7 +51,7 @@ class AddDocumentFragment: BaseFragment() {
             val tab: ArrayList <String> = ArrayList()
             val ids: ArrayList <String> = ArrayList()
             if (documentTypeList.isEmpty()){
-                Toast.makeText(requireActivity(), "Przed dodaniem dokumentu dodaj rodzaj w trzeciej zakładce", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), getString(R.string.add_doc_type_before), Toast.LENGTH_LONG).show()
             }
             documentTypeList.forEach {
                 tab.add(it.Name.toString())
@@ -103,7 +104,7 @@ class AddDocumentFragment: BaseFragment() {
     private fun saveDocumentToDatabase(id:String){
         val documentName = binding.nameEditText.text.toString().trim()
         if (documentName.isEmpty()){
-            binding.nameTextField.error = "Pole wymagane"
+            binding.nameTextField.error = getString(R.string.required)
             return
         }
         binding.nameTextField.error = null
@@ -134,7 +135,7 @@ class AddDocumentFragment: BaseFragment() {
 
 
 
-        Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), getString(R.string.add_success), Toast.LENGTH_SHORT).show()
 
 
     }

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
-            android:hint="Name"
+            android:hint="@string/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deleteButton">
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:hint="Description"
+            android:hint="@string/desc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nameTextField">
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="Zapisz"
+            android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionTextField">
 
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:drawableLeft="@drawable/round_delete_24"
-            android:text="Usuń pokój"
+            android:text="@string/delete_room"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

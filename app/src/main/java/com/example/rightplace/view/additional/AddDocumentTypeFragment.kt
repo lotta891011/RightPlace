@@ -34,7 +34,7 @@ class AddDocumentTypeFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title=getString(R.string.add_room)
+        mainActivity.supportActionBar?.title=getString(R.string.add_doc_type)
 
 
         binding.saveButton.setOnClickListener {

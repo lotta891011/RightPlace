@@ -93,7 +93,7 @@ class CameraFragment : BaseFragment() {
 
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
             override fun release() {
-                Toast.makeText(requireActivity(), "Scanner has been closed", Toast.LENGTH_SHORT)
+                Toast.makeText(requireActivity(), getString(R.string.scanner_closed), Toast.LENGTH_SHORT)
                     .show()
 
             }
@@ -138,7 +138,7 @@ class CameraFragment : BaseFragment() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 setupControls()
             } else {
-                Toast.makeText(requireActivity(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.no_permission), Toast.LENGTH_SHORT).show()
             }
         }
     }

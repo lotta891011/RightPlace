@@ -19,5 +19,20 @@
     <string name="pdf_ready">Plik PDF gotowy</string>
     <string name="pdf_error">Błąd podczas generowanie PDF</string>
     <string name="doc_not_found">Nie odnaleziono dokumentu</string>
-    <string name="docs_in">\"Dokumenty w: \"</string>
+    <string name="docs_in">Dokumenty w: </string>
+    <string name="name">Nazwa</string>
+    <string name="desc">Opis</string>
+    <string name="save">Zapisz</string>
+    <string name="delete_room">Usuń pokój</string>
+    <string name="button">Przycisk</string>
+    <string name="show_pdf">Pokaż PDF</string>
+    <string name="qr">QR</string>
+    <string name="room_">Pokój:</string>
+    <string name="add_doc_type">Dodaj rodzaj dokumentu</string>
+    <string name="empty_view">Brak pozycji do wyświetlenia</string>
+    <string name="use_buttob_to_add">Użyj przycisku aby dodać dokument</string>
+    <string name="add_doc_to">Dodaj dokument do:</string>
+    <string name="add_doc_type_before">Przed dodaniem dokumentu dodaj rodzaj w trzeciej zakładce</string>
+    <string name="scanner_closed">Skaner został zamknięty</string>
+    <string name="no_permission">Nie uzyskano dostępu</string>
 </resources>
