@@ -48,6 +48,9 @@ class AddDocumentFragment: BaseFragment() {
         documentTypeViewModel.documentTypeLiveData.observe(viewLifecycleOwner){ documentTypeList ->
             val tab: kotlin.collections.ArrayList <String> = ArrayList<String>()
             val ids: kotlin.collections.ArrayList <String> = ArrayList<String>()
+            if (documentTypeList.isEmpty()){
+                Toast.makeText(requireActivity(), "Przed dodaniem dokumentu dodaj rodzaj w trzeciej zakładce", Toast.LENGTH_LONG).show()
+            }
             documentTypeList.forEach {
                 tab.add(it.Name.toString())
                 ids.add(it.id)
@@ -101,6 +104,10 @@ class AddDocumentFragment: BaseFragment() {
         if (documentName.isEmpty()){
             binding.nameTextField.error = "Pole wymagane"
             return
+        }
+        Toast.makeText(requireActivity(), id, Toast.LENGTH_LONG).show()
+        if (id.isEmpty()){
+
         }
         binding.nameTextField.error = null
         val documentDescription = binding.descriptionEditText.text.toString().trim()

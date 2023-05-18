@@ -65,7 +65,7 @@ class ShowDocumentFragment: BaseFragment() {
             if(complete){
                 binding.pdfButton.visibility = View.GONE
                 binding.pdfShowButton.visibility = View.GONE
-                    return@observe
+                return@observe
             }
         }
         binding.nameEditText.requestFocus()
@@ -131,7 +131,7 @@ class ShowDocumentFragment: BaseFragment() {
                 requireActivity(),
                 R.layout.simple_spinner_item,tab)
 
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner.adapter = adapter
 

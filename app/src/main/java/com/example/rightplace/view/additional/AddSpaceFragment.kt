@@ -35,8 +35,11 @@ class AddSpaceFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainActivity.supportActionBar?.title="Dodaj pokój"
-
-
+        binding.deleteButton.setOnClickListener {
+            selectedSpace?.let { it1 -> spaceViewModel.deleteSpace(it1) }
+            Toast.makeText(requireActivity(), "Pokój usunięty pomyślnie", Toast.LENGTH_SHORT).show()
+            navigateUp()
+        }
         binding.saveButton.setOnClickListener {
             saveSpaceToDatabase()
         }
