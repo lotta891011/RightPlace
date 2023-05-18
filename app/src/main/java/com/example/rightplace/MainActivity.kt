@@ -1,11 +1,6 @@
 package com.example.rightplace
 
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.print.PrintAttributes
-import android.print.PrintDocumentAdapter
-import android.print.PrintManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -17,7 +12,6 @@ import com.example.rightplace.architecture.DocumentViewModel
 import com.example.rightplace.architecture.SpaceViewModel
 import com.example.rightplace.database.AppDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
@@ -27,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-//        supportActionBar?.setBackgroundDrawable(getDrawable(R.drawable.ic_launcher_foreground))
 
         val viewModel: DocumentViewModel by viewModels()
         viewModel.init(AppDatabase.getDatabase(this))

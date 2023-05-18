@@ -1,4 +1,4 @@
-package com.example.rightplace.view.epoxy
+package com.example.rightplace.epoxy
 
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -9,17 +9,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.ConcurrentHashMap
 
-/**
- * A pattern for using epoxy models with Kotlin with no annotations or code generation.
- *
- * See [com.airbnb.epoxy.kotlinsample.models.ItemViewBindingDataClass] for a usage example.
- *
- * If You use Proguard or R8, be sure to keep the bind method available with the following configuration:
- *
- * -keepclassmembers class * extends androidx.viewbinding.ViewBinding {
- *    public static *** bind(android.view.View);
- * }
- */
+
 abstract class ViewBindingKotlinModel<T : ViewBinding>(
     @LayoutRes private val layoutRes: Int
 ) : EpoxyModel<View>() {

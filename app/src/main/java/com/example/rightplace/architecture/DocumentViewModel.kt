@@ -19,7 +19,7 @@ class DocumentViewModel : ViewModel(){
         repository = AppRepository(appDatabase)
         viewModelScope.launch {
 
-            val documents = repository.getAllDocuments().collect{ items ->
+            repository.getAllDocuments().collect{ items ->
                 allDocumentsLiveData.postValue(items)
             }
 
@@ -27,16 +27,12 @@ class DocumentViewModel : ViewModel(){
 
     }
 
-    val liveData : MutableLiveData<List<Document>?>
-        get() = documentLiveData
-
-    suspend fun getFilteredUser(filter: String): List<Document> {
+    private suspend fun getFilteredUser(filter: String): List<Document> {
         return withContext(Dispatchers.IO) {
             repository.getFiltered(filter)
         }
     }
 
-    // to set the filterquery from the fragment/activity
     fun setFilterQuery(query: String) {
         viewModelScope.launch {
             documentLiveData.postValue(getFilteredUser(query))

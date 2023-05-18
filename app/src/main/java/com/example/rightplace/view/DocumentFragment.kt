@@ -1,4 +1,4 @@
-package com.example.rightplace
+package com.example.rightplace.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import com.example.rightplace.view.epoxy.DocumentEpoxyController
+import com.example.rightplace.R
+import com.example.rightplace.epoxy.DocumentEpoxyController
 import com.example.rightplace.databinding.FragmentDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.DocumentInterface
@@ -28,19 +29,19 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDocumentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title="Dokumenty w: "+selectedSpace?.Name
+        mainActivity.supportActionBar?.title=getString(R.string.docs_in)+selectedSpace?.Name
 
         selectedSpace?.id?.let { sharedViewModel.setFilterQuery(it) }
         binding.addButton.setOnClickListener {
             val navDirections = selectedSpace?.id?.let { it1 ->
-                DocumentFragmentDirections.actionDocumentFragmentToAddDocumentFragment(
+                com.example.rightplace.view.DocumentFragmentDirections.actionDocumentFragmentToAddDocumentFragment(
                     it1
                 )
             }
@@ -57,12 +58,13 @@ class DocumentFragment : BaseFragment(), DocumentInterface {
     }
     override fun onDelete(document: Document) {
         sharedViewModel.deleteDocument(document)
-        Toast.makeText(requireActivity(), "Pozycja usunięta pomyślnie", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), getString(R.string.delete_success), Toast.LENGTH_SHORT).show()
 
     }
 
     override fun onItemSelected(document: Document) {
-        val navDirections = DocumentFragmentDirections.actionDocumentFragmentToShowDocumentFragment(document.id)
+        val navDirections =
+            DocumentFragmentDirections.actionDocumentFragmentToShowDocumentFragment(document.id)
 
         navigateViaGraph(navDirections)
     }

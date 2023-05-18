@@ -7,4 +7,17 @@
     <string name="zaktualizuj">Zaktualizuj</string>
     <string name="pobierz_pdf">Pobierz PDF</string>
     <string name="usun">Usuń</string>
+    <string name="update">Zaktualizuj</string>
+    <string name="update_info">Zaktualizuj informacje</string>
+    <string name="required">Pole wymagane</string>
+    <string name="update_success">Zaktualizowano pomyślnie</string>
+    <string name="add_success">Pozycja dodana pomyślnie</string>
+    <string name="delete_success">Usunięto pomyślnie</string>
+    <string name="add_room">Dodaj pokój</string>
+    <string name="show_edit">Podgląd i edycja dokumentu</string>
+    <string name="doc_name">Nazwa dokumentu:</string>
+    <string name="pdf_ready">Plik PDF gotowy</string>
+    <string name="pdf_error">Błąd podczas generowanie PDF</string>
+    <string name="doc_not_found">Nie odnaleziono dokumentu</string>
+    <string name="docs_in">\"Dokumenty w: \"</string>
 </resources>

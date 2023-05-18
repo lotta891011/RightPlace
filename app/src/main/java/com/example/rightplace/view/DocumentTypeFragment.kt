@@ -1,15 +1,14 @@
-package com.example.rightplace
+package com.example.rightplace.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.navArgs
-import com.example.rightplace.view.epoxy.DocumentEpoxyController
+import com.example.rightplace.R
 import com.example.rightplace.databinding.FragmentDocumentBinding
 import com.example.rightplace.model.*
-import com.example.rightplace.view.epoxy.DocumentTypeEpoxyController
+import com.example.rightplace.epoxy.DocumentTypeEpoxyController
 
 
 class DocumentTypeFragment : BaseFragment(), DocumentTypeInterface {
@@ -22,14 +21,13 @@ class DocumentTypeFragment : BaseFragment(), DocumentTypeInterface {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDocumentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        mainActivity.supportActionBar?.title="Dokumenty w: "+selectedSpace?.Name
 
 
         binding.addButton.setOnClickListener {
@@ -46,12 +44,15 @@ class DocumentTypeFragment : BaseFragment(), DocumentTypeInterface {
     }
     override fun onDelete(documentType: DocumentType) {
         documentTypeViewModel.deleteDocumentType(documentType)
-        Toast.makeText(requireActivity(), "Pozycja usunięta pomyślnie", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), getString(R.string.delete_success), Toast.LENGTH_SHORT).show()
 
     }
 
     override fun onItemSelected(documentType: DocumentType) {
-        val navDirections = DocumentTypeFragmentDirections.actionDocumentTypeFragmentToAddDocumentTypeFragment(documentType.id)
+        val navDirections =
+            DocumentTypeFragmentDirections.actionDocumentTypeFragmentToAddDocumentTypeFragment(
+                documentType.id
+            )
         navigateViaGraph(navDirections)
     }
     override fun onDestroyView() {

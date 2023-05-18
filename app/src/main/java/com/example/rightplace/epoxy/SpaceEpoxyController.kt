@@ -1,4 +1,4 @@
-package com.example.rightplace.view.epoxy
+package com.example.rightplace.epoxy
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.rightplace.R
@@ -23,7 +23,6 @@ class SpaceEpoxyController(
             EmptyStateEpoxyModel().id("test").addTo(this)
             return
         }
-        // dodawanie posoriwanych obiektów do widoku iterując
         spaceList.sortedBy { it.Name } .forEach { space ->
             SpaceEpoxyModel(space, spaceInterface).id(space.id).addTo(this)
         }
@@ -39,7 +38,6 @@ class SpaceEpoxyController(
             descriptionTextView.text = space.Description
             editButton.setOnClickListener {
                 spaceInterface.onEdit(space)
-//                spaceInterface.onDelete(space)
             }
 
             root.setOnClickListener {
@@ -48,7 +46,7 @@ class SpaceEpoxyController(
         }
 
     }
-    class EmptyStateEpoxyModel(): ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
+    class EmptyStateEpoxyModel: ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
         override fun ModelEmptyStateBinding.bind(){
             //nothing at the moment
         }

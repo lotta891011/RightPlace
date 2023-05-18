@@ -1,4 +1,4 @@
-package com.example.rightplace
+package com.example.rightplace.view.additional
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import com.example.rightplace.view.BaseFragment
 import com.example.rightplace.databinding.FragmentAddDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.Space
@@ -21,7 +22,7 @@ class AddDocumentFragment: BaseFragment() {
     private var _binding: FragmentAddDocumentBinding? = null
     private val binding get() = _binding!!
 
-    private val safeArgs : AddDocumentFragmentArgs by navArgs()
+    private val safeArgs : AddSpaceFragmentArgs by navArgs()
 
     private val selectedSpace : Space? by lazy{
         spaceViewModel.spaceLiveData.value?.find {
@@ -33,7 +34,7 @@ class AddDocumentFragment: BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddDocumentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,8 +47,8 @@ class AddDocumentFragment: BaseFragment() {
 
         val spinner: Spinner = binding.typesSpinner
         documentTypeViewModel.documentTypeLiveData.observe(viewLifecycleOwner){ documentTypeList ->
-            val tab: kotlin.collections.ArrayList <String> = ArrayList<String>()
-            val ids: kotlin.collections.ArrayList <String> = ArrayList<String>()
+            val tab: ArrayList <String> = ArrayList()
+            val ids: ArrayList <String> = ArrayList()
             if (documentTypeList.isEmpty()){
                 Toast.makeText(requireActivity(), "Przed dodaniem dokumentu dodaj rodzaj w trzeciej zakładce", Toast.LENGTH_LONG).show()
             }
@@ -60,7 +61,7 @@ class AddDocumentFragment: BaseFragment() {
                 android.R.layout.simple_spinner_item,tab)
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
+
             spinner.adapter = adapter
 
             binding.nameEditText.requestFocus()
@@ -104,10 +105,6 @@ class AddDocumentFragment: BaseFragment() {
         if (documentName.isEmpty()){
             binding.nameTextField.error = "Pole wymagane"
             return
-        }
-        Toast.makeText(requireActivity(), id, Toast.LENGTH_LONG).show()
-        if (id.isEmpty()){
-
         }
         binding.nameTextField.error = null
         val documentDescription = binding.descriptionEditText.text.toString().trim()

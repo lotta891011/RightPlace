@@ -1,4 +1,4 @@
-package com.example.rightplace.view.epoxy
+package com.example.rightplace.epoxy
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.rightplace.R
@@ -22,7 +22,6 @@ class DocumentEpoxyController(
             EmptyStateEpoxyModel().id("empty_sate").addTo(this)
             return
         }
-        // dodawanie posoriwanych obiektów do widoku iterując
         documentList.sortedBy { it.Name } .forEach { document ->
             DocumentEpoxyModel(document, documentInterface).id(document.id).addTo(this)
         }
@@ -47,7 +46,7 @@ class DocumentEpoxyController(
         }
 
     }
-    class EmptyStateEpoxyModel(): ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
+    class EmptyStateEpoxyModel : ViewBindingKotlinModel<ModelEmptyStateBinding>(R.layout.model_empty_state){
         override fun ModelEmptyStateBinding.bind(){
         //nothing at the moment
         }

@@ -1,10 +1,9 @@
-package com.example.rightplace
+package com.example.rightplace.view.additional
 
 
-import android.R
+import com.example.rightplace.R
 import android.content.Intent
 import android.graphics.*
-import android.graphics.Typeface.*
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +16,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.navArgs
+import com.example.rightplace.view.BaseFragment
+import com.example.rightplace.BuildConfig
 import com.example.rightplace.databinding.FragmentShowDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.Space
@@ -28,19 +29,16 @@ class ShowDocumentFragment: BaseFragment() {
     private var _binding: FragmentShowDocumentBinding? = null
     private val binding get() = _binding!!
 
-    var pageHeight = 600
-    var pageWidth = 500
+    private var pageHeight = 600
+    private var pageWidth = 500
 
-    // creating a bitmap variable
-    // for storing our images
-    lateinit var bmp: Bitmap
-    lateinit var scaledbmp: Bitmap
 
     private val safeArgs : ShowDocumentFragmentArgs by navArgs()
     private val selectedDocument : Document? by lazy{
         sharedViewModel.allDocumentsLiveData.value?.find {
             it.id == safeArgs.documentId
         }
+
 
     }
 
@@ -49,15 +47,18 @@ class ShowDocumentFragment: BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentShowDocumentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title="Podgląd i edycja dokumentu"
-
+        mainActivity.supportActionBar?.title=getString(R.string.show_edit)
+        if(selectedDocument==null){
+            Toast.makeText(requireActivity(), getString(R.string.doc_not_found), Toast.LENGTH_LONG).show()
+            navigateUp()
+        }
         binding.saveButton.setOnClickListener {
             saveDocumentToDatabase()
         }
@@ -76,8 +77,8 @@ class ShowDocumentFragment: BaseFragment() {
 
         val spinner: Spinner = binding.typesSpinner
         documentTypeViewModel.documentTypeLiveData.observe(viewLifecycleOwner){ documentTypeList ->
-            val tab: kotlin.collections.ArrayList <String> = ArrayList<String>()
-            val ids: kotlin.collections.ArrayList <String> = ArrayList<String>()
+            val tab: ArrayList <String> = ArrayList()
+            val ids: ArrayList <String> = ArrayList()
             documentTypeList.forEach {
                 tab.add(it.Name.toString())
                 ids.add(it.id)
@@ -129,9 +130,9 @@ class ShowDocumentFragment: BaseFragment() {
             }
             val adapter : ArrayAdapter<String> = ArrayAdapter(
                 requireActivity(),
-                R.layout.simple_spinner_item,tab)
+                android.R.layout.simple_spinner_item,tab)
 
-            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner.adapter = adapter
 
@@ -161,13 +162,13 @@ class ShowDocumentFragment: BaseFragment() {
         }
 
     }
-    fun openFile(file: File) {
+    private fun openFile(file: File) {
 
-        // Get URI and MIME type of file
+
         val uri: Uri = FileProvider.getUriForFile(requireActivity(),  BuildConfig.APPLICATION_ID + ".provider", file)
         val mime: String? = requireActivity().contentResolver.getType(uri)
 
-        // Open file with user selected app
+
         val intent = Intent()
         intent.action = Intent.ACTION_VIEW
         intent.setDataAndType(uri, mime)
@@ -179,7 +180,7 @@ class ShowDocumentFragment: BaseFragment() {
 
         val documentName = binding.nameEditText.text.toString().trim()
         if (documentName.isEmpty()){
-            binding.nameTextField.error = "Pole wymagane"
+            binding.nameTextField.error = getString(R.string.required)
             return
         }
         binding.nameTextField.error = null
@@ -196,7 +197,7 @@ class ShowDocumentFragment: BaseFragment() {
             document.TypeId=id
         }
         sharedViewModel.updateDocument(document)
-        Toast.makeText(requireActivity(), "Zaktualizowano pomyślnie", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), getString(R.string.update_success), Toast.LENGTH_SHORT).show()
 
 
     }
@@ -205,39 +206,39 @@ class ShowDocumentFragment: BaseFragment() {
         _binding = null
     }
 
-    fun generatePDF(bitmap: Bitmap, documentName: String ): File {
-        var pdfDocument: PdfDocument = PdfDocument()
+    private fun generatePDF(bitmap: Bitmap, documentName: String ): File {
+        val pdfDocument = PdfDocument()
 
-        var paint: Paint = Paint()
-        var title: Paint = Paint()
+        val paint = Paint()
+        val title = Paint()
 
-        var myPageInfo: PdfDocument.PageInfo? =
+        val myPageInfo: PdfDocument.PageInfo? =
             PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
 
-        var myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
+        val myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
 
-        var canvas: Canvas = myPage.canvas
+        val canvas: Canvas = myPage.canvas
 
         canvas.drawBitmap(bitmap, 32F, 40F, paint)
 
         title.textSize = 30F
 
         title.textAlign = Paint.Align.CENTER
-        canvas.drawText("Nazwa dokumentu:", 250F, 510F, title)
+        canvas.drawText(getString(R.string.doc_name), 250F, 510F, title)
         canvas.drawText(documentName, 250F, 560F, title)
 
         pdfDocument.finishPage(myPage)
 
-        val file: File = File("/storage/self/primary/Documents", "$documentName.pdf")
+        val file = File("/storage/self/primary/Documents", "$documentName.pdf")
 
         try {
             pdfDocument.writeTo(FileOutputStream(file))
 
-            Toast.makeText(requireActivity(), "PDF file generated..", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.pdf_ready), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
 
-            Toast.makeText(requireActivity(), "Fail to generate PDF file..", Toast.LENGTH_SHORT)
+            Toast.makeText(requireActivity(), getString(R.string.pdf_error), Toast.LENGTH_SHORT)
                 .show()
         }
         pdfDocument.close()

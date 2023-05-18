@@ -9,7 +9,6 @@ interface SpaceDao {
     @Query("SELECT * FROM space")
     fun getAll(): Flow<List<Space>>
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(space: Space)
 

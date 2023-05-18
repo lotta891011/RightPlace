@@ -1,4 +1,4 @@
-package com.example.rightplace
+package com.example.rightplace.view.additional
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import com.example.rightplace.view.BaseFragment
+import com.example.rightplace.R
 import com.example.rightplace.databinding.FragmentAddDocumentTypeBinding
 import com.example.rightplace.model.DocumentType
 import java.util.UUID
@@ -25,14 +27,14 @@ class AddDocumentTypeFragment: BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddDocumentTypeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivity.supportActionBar?.title="Dodaj pokój"
+        mainActivity.supportActionBar?.title=getString(R.string.add_room)
 
 
         binding.saveButton.setOnClickListener {
@@ -56,8 +58,8 @@ class AddDocumentTypeFragment: BaseFragment() {
             isInEditMode = true
             binding.nameEditText.setText(documentType.Name)
             binding.descriptionEditText.setText(documentType.Description)
-            binding.saveButton.text = "Zaktualizuj"
-            mainActivity.supportActionBar?.title = "Zaktualizuj informacje"
+            binding.saveButton.text = getString(R.string.update)
+            mainActivity.supportActionBar?.title = getString(R.string.update_info)
 
         }
     }
@@ -66,7 +68,7 @@ class AddDocumentTypeFragment: BaseFragment() {
     private fun saveDocumentTypeToDatabase(){
         val documentTypeName = binding.nameEditText.text.toString().trim()
         if (documentTypeName.isEmpty()){
-            binding.nameTextField.error = "Pole wymagane"
+            binding.nameTextField.error = getString(R.string.required)
             return
         }
         binding.nameTextField.error = null
@@ -78,7 +80,7 @@ class AddDocumentTypeFragment: BaseFragment() {
                 Description = documentTypeDescription,
             )
             documentTypeViewModel.updateDocumentType(documentType)
-            Toast.makeText(requireActivity(), "Zaktualizowano pomyślnie", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.update_success), Toast.LENGTH_SHORT).show()
 
         }
         else{
@@ -88,12 +90,8 @@ class AddDocumentTypeFragment: BaseFragment() {
                 Description = documentTypeDescription
             )
             documentTypeViewModel.insertDocumentType(documentType)
-            Toast.makeText(requireActivity(), "Pozycja dodana pomyślnie", Toast.LENGTH_SHORT).show()
-
+            Toast.makeText(requireActivity(), getString(R.string.add_success), Toast.LENGTH_SHORT).show()
         }
-
-
-
     }
     override fun onDestroyView() {
         super.onDestroyView()

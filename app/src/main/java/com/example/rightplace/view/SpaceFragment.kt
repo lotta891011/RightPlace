@@ -1,14 +1,15 @@
-package com.example.rightplace
+package com.example.rightplace.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.rightplace.R
 import com.example.rightplace.databinding.FragmentSpaceBinding
 import com.example.rightplace.model.Space
 import com.example.rightplace.model.SpaceInterface
-import com.example.rightplace.view.epoxy.SpaceEpoxyController
+import com.example.rightplace.epoxy.SpaceEpoxyController
 
 
 class SpaceFragment : BaseFragment(), SpaceInterface {
@@ -19,9 +20,8 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        // Inflate the layout for this fragment
         _binding = FragmentSpaceBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,13 +43,9 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onDelete(space: Space) {
         spaceViewModel.deleteSpace(space)
-        Toast.makeText(requireActivity(), "Pozycja usunięta pomyślnie", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), getString(R.string.delete_success), Toast.LENGTH_SHORT).show()
 
     }
 

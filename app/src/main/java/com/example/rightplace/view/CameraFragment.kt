@@ -1,39 +1,27 @@
-package com.example.rightplace
+package com.example.rightplace.view
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil.setContentView
 import com.example.rightplace.databinding.FragmentCameraBinding
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.view.SurfaceHolder
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.example.rightplace.databinding.FragmentDocumentBinding
+import com.example.rightplace.R
 import java.io.IOException
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.Detector.Detections
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CameraFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CameraFragment : BaseFragment() {
     private val requestCodeCameraPermission = 1001
     private lateinit var cameraSource: CameraSource
@@ -41,16 +29,10 @@ class CameraFragment : BaseFragment() {
     private var scannedValue = ""
     private lateinit var binding: FragmentCameraBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
 
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
@@ -75,7 +57,7 @@ class CameraFragment : BaseFragment() {
 
         cameraSource = CameraSource.Builder(requireActivity(), barcodeDetector)
             .setRequestedPreviewSize(1920, 1080)
-            .setAutoFocusEnabled(true) //you should add this feature
+            .setAutoFocusEnabled(true)
             .build()
 
         binding.cameraSurfaceView.holder.addCallback(object : SurfaceHolder.Callback {
@@ -121,17 +103,15 @@ class CameraFragment : BaseFragment() {
                     scannedValue = barcodes.valueAt(0).rawValue
 
 
-                    //Don't forget to add this line printing value or finishing activity must run on main thread
                     requireActivity().runOnUiThread {
 
-                        val navDirections = CameraFragmentDirections.actionCameraFragmentToShowDocumentFragment(
-                            scannedValue
-                        )
-//                        navigateViaGraph(navDirections)
+                        val navDirections =
+                            CameraFragmentDirections.actionCameraFragmentToShowDocumentFragment(
+                                scannedValue
+                            )
                         safeNavigate(navDirections)
 
 
-                        Toast.makeText(requireActivity(),  scannedValue, Toast.LENGTH_SHORT).show()
                         cameraSource.stop()
                     }
                 }
@@ -147,6 +127,7 @@ class CameraFragment : BaseFragment() {
         )
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

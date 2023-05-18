@@ -2,7 +2,6 @@ package com.example.rightplace.database.dao
 
 import androidx.room.*
 import com.example.rightplace.model.Document
-import com.example.rightplace.model.Space
 import kotlinx.coroutines.flow.Flow
 
 @Dao
