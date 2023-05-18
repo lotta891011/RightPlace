@@ -21,6 +21,7 @@ import com.example.rightplace.BuildConfig
 import com.example.rightplace.databinding.FragmentShowDocumentBinding
 import com.example.rightplace.model.Document
 import com.example.rightplace.model.Space
+import io.github.g0dkar.qrcode.QRCode
 import java.io.File
 import java.io.FileOutputStream
 
@@ -103,9 +104,23 @@ class ShowDocumentFragment: BaseFragment() {
                 val myBitmap = BitmapFactory.decodeFile(qrCodeFile.absolutePath)
 
 
-                binding.imageView.setImageBitmap(myBitmap)
 
-                myBitmap?.let{
+
+                if (myBitmap==null){
+                    val f = File("/storage/self/primary/DCIM/QR/")
+                    if(!f.exists()){
+                        f.mkdir()
+                    }
+                    val qrCodeFile = File("/storage/self/primary/DCIM/QR/"+document.id+"_qrcode.png")
+                    val dataToEncode = document.id
+                    val eachQRCodeSquareSize = 15 // In Pixels!
+                    val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
+                    qrCodeFile.let {
+                        qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
+
+                    }
+                }
+                else{
                     binding.pdfButton.visibility=View.VISIBLE
 
                     binding.pdfButton.setOnClickListener {
@@ -115,10 +130,9 @@ class ShowDocumentFragment: BaseFragment() {
                             openFile(file)
                         }
                     }
-
                 }
 
-
+                binding.imageView.setImageBitmap(myBitmap)
 
 
             }
