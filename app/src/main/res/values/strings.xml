@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">RightPlace</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="typ">Typ:</string>
-    <string name="zmie_typ">Zmień typ</string>
+    <string name="zmie_typ">Zmień rodzaj</string>
     <string name="zaktualizuj">Zaktualizuj</string>
     <string name="pobierz_pdf">Pobierz PDF</string>
     <string name="usun">Usuń</string>
@@ -17,9 +15,9 @@
     <string name="show_edit">Podgląd i edycja dokumentu</string>
     <string name="doc_name">Nazwa dokumentu:</string>
     <string name="pdf_ready">Plik PDF gotowy</string>
-    <string name="pdf_error">Błąd podczas generowanie PDF</string>
+    <string name="pdf_error">Błąd podczas generowania PDF</string>
     <string name="doc_not_found">Nie odnaleziono dokumentu</string>
-    <string name="docs_in">Dokumenty w: </string>
+    <string name="docs_in">Dokumenty w:</string>
     <string name="name">Nazwa</string>
     <string name="desc">Opis</string>
     <string name="save">Zapisz</string>
