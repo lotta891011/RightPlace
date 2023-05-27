@@ -43,12 +43,6 @@ class SpaceFragment : BaseFragment(), SpaceInterface {
 
     }
 
-    override fun onDelete(space: Space) {
-        spaceViewModel.deleteSpace(space)
-        Toast.makeText(requireActivity(), getString(R.string.delete_success), Toast.LENGTH_SHORT).show()
-
-    }
-
     override fun onEdit(space: Space) {
         val navDirections = SpaceFragmentDirections.actionSpaceFragmentToAddSpaceFragment(space.id)
         navigateViaGraph(navDirections)

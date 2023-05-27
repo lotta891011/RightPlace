@@ -33,4 +33,7 @@
     <string name="add_doc_type_before">Przed dodaniem dokumentu dodaj rodzaj w trzeciej zakładce</string>
     <string name="scanner_closed">Skaner został zamknięty</string>
     <string name="no_permission">Nie uzyskano dostępu</string>
+    <string name="rooms">Pokoje</string>
+    <string name="camera">Aparat</string>
+    <string name="types">Rodzaje</string>
 </resources>
